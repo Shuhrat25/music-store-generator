@@ -5,6 +5,8 @@ import { GalleryView } from './components/GalleryView';
 import { SongModal } from './components/SongModal';
 import type { Song, Region } from './types/music';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 export const App: React.FC = () => {
   const [region, setRegion] = useState<Region>('en_US');
   const [seed, setSeed] = useState<string>('12345');
@@ -14,7 +16,7 @@ export const App: React.FC = () => {
 
   const [songs, setSongs] = useState<Song[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  
+
   const [selectedSong, setSelectedSong] = useState<Song | null>(null);
 
   const handleRegionChange = (r: Region) => {
@@ -42,7 +44,7 @@ export const App: React.FC = () => {
       setLoading(true);
       try {
         const response = await fetch(
-          `http://localhost:5000/api/songs?region=${region}&seed=${seed}&likes=${likes}&page=${page}&limit=10`
+          `${API_URL}/api/songs?region=${region}&seed=${seed}&likes=${likes}&page=${page}&limit=10`
         );
         const data: Song[] = await response.json();
 
